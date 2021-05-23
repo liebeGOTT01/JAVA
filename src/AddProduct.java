@@ -1,20 +1,35 @@
+
+import static java.lang.Integer.parseInt;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
- * @author 2ndyrGroupA
+ * @author Raven Torres
  */
 public class AddProduct extends javax.swing.JFrame {
+
+    private String Prod_id = "";
+    private Connection conn;
+    private PreparedStatement pstmt;
 
     /**
      * Creates new form AddProduct
      */
     public AddProduct() {
         initComponents();
+        data();
+        getCategory();
     }
 
     /**
@@ -26,24 +41,27 @@ public class AddProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        productTable = new javax.swing.JTable();
+        addBtnP = new javax.swing.JButton();
+        editBtnP = new javax.swing.JButton();
+        deleteBtnP = new javax.swing.JButton();
+        clearBtnP = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        menuTxtField = new javax.swing.JTextField();
+        priceTxtField = new javax.swing.JTextField();
+        categoryDropdown = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,83 +69,90 @@ public class AddProduct extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 440, 120));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 440, 120));
 
-        jTable2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        productTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "MENU", "CATEGORY", "PRICE"
+                "ID#", "MENU", "CATEGORY", "PRICE"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(2).setMinWidth(110);
-            jTable2.getColumnModel().getColumn(2).setPreferredWidth(110);
-            jTable2.getColumnModel().getColumn(2).setMaxWidth(110);
+        productTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(productTable);
+        if (productTable.getColumnModel().getColumnCount() > 0) {
+            productTable.getColumnModel().getColumn(3).setMinWidth(110);
+            productTable.getColumnModel().getColumn(3).setPreferredWidth(110);
+            productTable.getColumnModel().getColumn(3).setMaxWidth(110);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 460, 320));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 460, 320));
 
-        jButton3.setBackground(new java.awt.Color(0, 204, 51));
-        jButton3.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jButton3.setText("ADD");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 51), 1, true));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addBtnP.setBackground(new java.awt.Color(0, 204, 51));
+        addBtnP.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        addBtnP.setText("ADD");
+        addBtnP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 51), 1, true));
+        addBtnP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addBtnPActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 150, 40));
+        jPanel1.add(addBtnP, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 70, 40));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 255));
-        jButton5.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jButton5.setText("EDIT");
-        jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 255), 1, true));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        editBtnP.setBackground(new java.awt.Color(0, 51, 255));
+        editBtnP.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        editBtnP.setText("EDIT");
+        editBtnP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 255), 1, true));
+        editBtnP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                editBtnPActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 150, 40));
+        jPanel1.add(editBtnP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 70, 40));
 
-        jButton4.setBackground(new java.awt.Color(255, 51, 51));
-        jButton4.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jButton4.setText("DELETE");
-        jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 1, true));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 150, 40));
+        deleteBtnP.setBackground(new java.awt.Color(255, 51, 51));
+        deleteBtnP.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        deleteBtnP.setText("DELETE");
+        deleteBtnP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 1, true));
+        deleteBtnP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnPActionPerformed(evt);
+            }
+        });
+        jPanel1.add(deleteBtnP, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 120, 40));
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jButton2.setText("CLEAR");
-        jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 150, 40));
+        clearBtnP.setBackground(new java.awt.Color(204, 204, 204));
+        clearBtnP.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        clearBtnP.setText("CLEAR");
+        clearBtnP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        clearBtnP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnPActionPerformed(evt);
+            }
+        });
+        jPanel1.add(clearBtnP, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 100, 40));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-sm.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 300, 290));
-
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 520));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 300, 290));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 3, true));
 
-        jTextField1.setText("jTextField1");
-
-        jTextField3.setText("jTextField1");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        priceTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                priceTxtFieldActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        categoryDropdown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                categoryDropdownActionPerformed(evt);
             }
         });
 
@@ -150,18 +175,18 @@ public class AddProduct extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(priceTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(menuTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(categoryDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -169,30 +194,33 @@ public class AddProduct extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                    .addComponent(categoryDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 360, 200));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 360, 200));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("MENU");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 80, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 80, 30));
+
+        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 580));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 990, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,21 +230,102 @@ public class AddProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void editBtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnPActionPerformed
+        String product_name = menuTxtField.getText();
+        Object product_category = categoryDropdown.getSelectedItem();
+        int product_price = parseInt(priceTxtField.getText());
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (product_name.isEmpty() || Prod_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please click the table first...");
+        } else {
+            try {
+                int id = Integer.valueOf(Prod_id);
+                Class.forName("com.mysql.jdbc.Driver");
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+                pstmt = conn.prepareStatement("UPDATE product_table SET product_name= ? , product_category=? , product_price=? WHERE product_id=? ");
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+                pstmt.setString(1, product_name);
+                pstmt.setObject(2, product_category);
+                pstmt.setInt(3, product_price);
+                pstmt.setInt(4, id);
+
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Succesfully Updated");
+                data();
+
+                conn.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_editBtnPActionPerformed
+
+    private void addBtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnPActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); //load the driver
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            Statement stmt = (Statement) conn.createStatement(); //get the connection stream(connection port)
+            String query = "INSERT INTO `product_table`(`product_name`,`product_category`, `product_price`) VALUES ('" + this.menuTxtField.getText() + "','" + this.categoryDropdown.getSelectedItem() + "','" + this.priceTxtField.getText() + "')";
+            stmt.executeUpdate(query);
+            conn.close();
+            JOptionPane.showMessageDialog(this, "Successfully Added.");
+            data();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_addBtnPActionPerformed
+
+    private void priceTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTxtFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_priceTxtFieldActionPerformed
+
+    private void categoryDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryDropdownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryDropdownActionPerformed
+
+    private void productTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        int selectedIndex = productTable.getSelectedRow();
+        Prod_id = model.getValueAt(selectedIndex, 0).toString();
+        menuTxtField.setText(model.getValueAt(selectedIndex, 1).toString());
+        categoryDropdown.setSelectedItem(model.getValueAt(selectedIndex, 2).toString());
+        priceTxtField.setText(model.getValueAt(selectedIndex, 3).toString());
+    }//GEN-LAST:event_productTableMouseClicked
+
+    private void clearBtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnPActionPerformed
+        this.menuTxtField.setText("");
+        this.categoryDropdown.setSelectedItem("dessert");
+        this.priceTxtField.setText("");
+    }//GEN-LAST:event_clearBtnPActionPerformed
+
+    private void deleteBtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnPActionPerformed
+
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete the record?", "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            try {
+                int id = Integer.valueOf(Prod_id);
+
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+                pstmt = conn.prepareStatement("DELETE FROM product_table WHERE product_id=? ");
+
+                pstmt.setInt(1, id);
+
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Succesfully Deleted");
+
+                data();
+
+                conn.close();
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }//GEN-LAST:event_deleteBtnPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,7 +338,7 @@ public class AddProduct extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -254,10 +363,11 @@ public class AddProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton addBtnP;
+    private javax.swing.JComboBox<String> categoryDropdown;
+    private javax.swing.JButton clearBtnP;
+    private javax.swing.JButton deleteBtnP;
+    private javax.swing.JButton editBtnP;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -269,8 +379,43 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField menuTxtField;
+    private javax.swing.JTextField priceTxtField;
+    private javax.swing.JTable productTable;
     // End of variables declaration//GEN-END:variables
+
+    private void data() {
+        DefaultTableModel dm = (DefaultTableModel) productTable.getModel();
+        dm.setRowCount(0);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            PreparedStatement insert = conn.prepareStatement("select * from product_table");
+            ResultSet result = insert.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+            while (result.next()) {
+                model.addRow(new Object[]{result.getInt("product_id"),result.getString("product_name"), result.getObject("product_category"), result.getInt("product_price")});
+                
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void getCategory() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            Statement stmt = conn.createStatement(); 
+            ResultSet rs = stmt.executeQuery("SELECT * FROM category_table");
+            while (rs.next()) {
+                String category = rs.getString("category");
+                categoryDropdown.addItem(category);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
