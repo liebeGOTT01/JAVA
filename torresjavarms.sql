@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2021 at 04:49 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: May 25, 2021 at 04:49 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -41,8 +42,24 @@ INSERT INTO `category_table` (`category_id`, `category`) VALUES
 (2, 'Combo meal'),
 (3, 'Breakfast'),
 (4, 'Lunch'),
-(5, 'Dinner'),
-(6, 'Buy 1 Take 1 ');
+(6, 'Buy 1 Take 1 '),
+(7, 'Sea foods');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_table`
+--
+
+CREATE TABLE `order_table` (
+  `order_id` int(11) NOT NULL,
+  `table_name` varchar(255) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_price` int(11) NOT NULL,
+  `product_quantity` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `ordered_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -66,8 +83,21 @@ CREATE TABLE `product_table` (
 INSERT INTO `product_table` (`product_id`, `product_name`, `product_category`, `product_price`, `created_at`, `deleted_at`) VALUES
 (6, 'Lechon belly', 'Lunch', 650, '2021-05-23 20:31:21', '2021-05-23 20:31:21'),
 (7, 'hamburger', 'Buy 1 Take 1 ', 38, '2021-05-23 20:32:07', '2021-05-23 20:32:07'),
-(8, 'Jeric', 'Buy 1 Take 1 ', 1, '2021-05-23 21:21:15', '2021-05-23 21:21:15'),
-(10, '[amadasf', 'Breakfast', 15, '2021-05-23 22:36:16', '2021-05-23 22:36:16');
+(11, 'shrimps', 'Sea foods', 75, '2021-05-25 16:32:52', '2021-05-25 16:32:52'),
+(12, 'pasta', 'Dessert', 55, '2021-05-25 16:33:39', '2021-05-25 16:33:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -80,10 +110,22 @@ ALTER TABLE `category_table`
   ADD PRIMARY KEY (`category_id`);
 
 --
+-- Indexes for table `order_table`
+--
+ALTER TABLE `order_table`
+  ADD PRIMARY KEY (`order_id`);
+
+--
 -- Indexes for table `product_table`
 --
 ALTER TABLE `product_table`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -93,13 +135,25 @@ ALTER TABLE `product_table`
 -- AUTO_INCREMENT for table `category_table`
 --
 ALTER TABLE `category_table`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `order_table`
+--
+ALTER TABLE `order_table`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_table`
 --
 ALTER TABLE `product_table`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
