@@ -27,6 +27,7 @@ public class AddSales extends javax.swing.JFrame {
     public AddSales() {
         initComponents();
         getMenu();
+        getPrice();
     }
 
     /**
@@ -45,7 +46,6 @@ public class AddSales extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         categoryDropdown = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -54,8 +54,7 @@ public class AddSales extends javax.swing.JFrame {
         menuDropdown = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        price = new javax.swing.JPanel();
-        priceLabel = new javax.swing.JLabel();
+        price = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -67,6 +66,7 @@ public class AddSales extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,9 +130,6 @@ public class AddSales extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 110, 50));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-sm.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 240, 210));
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 3, true));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,6 +157,9 @@ public class AddSales extends javax.swing.JFrame {
 
         menuDropdown.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuDropdownMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuDropdownMouseEntered(evt);
             }
@@ -169,29 +169,17 @@ public class AddSales extends javax.swing.JFrame {
                 menuDropdownActionPerformed(evt);
             }
         });
+        menuDropdown.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                menuDropdownPropertyChange(evt);
+            }
+        });
         jPanel3.add(menuDropdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 120, 43));
 
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel12.setText("Menu:");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 62, -1));
         jPanel3.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 120, 44));
-
-        price.setBackground(new java.awt.Color(255, 255, 255));
-        price.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
-
-        priceLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-
-        javax.swing.GroupLayout priceLayout = new javax.swing.GroupLayout(price);
-        price.setLayout(priceLayout);
-        priceLayout.setHorizontalGroup(
-            priceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(priceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-        );
-        priceLayout.setVerticalGroup(
-            priceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(priceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-        );
-
         jPanel3.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 120, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 260, 260));
@@ -201,7 +189,7 @@ public class AddSales extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 430, 140, 20));
 
         jPanel2.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 580));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/order.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -246,6 +234,9 @@ public class AddSales extends javax.swing.JFrame {
         jLabel13.setText("ORDER");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 90, 30));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 560, 290, 210));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,16 +276,27 @@ public class AddSales extends javax.swing.JFrame {
     }//GEN-LAST:event_menuDropdownActionPerformed
 
     private void menuDropdownMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuDropdownMouseEntered
-       try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-            Statement stmt = conn.createStatement(); 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM product_table");
-            //priceLabel.setText();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+//       try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+//            Statement stmt = conn.createStatement(); 
+//            ResultSet rs = stmt.executeQuery("SELECT * FROM product_table");
+//            //priceLabel.setText();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+        getPrice();
     }//GEN-LAST:event_menuDropdownMouseEntered
+
+    private void menuDropdownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuDropdownMouseClicked
+        // TODO add your handling code here:
+        getPrice();
+    }//GEN-LAST:event_menuDropdownMouseClicked
+
+    private void menuDropdownPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_menuDropdownPropertyChange
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_menuDropdownPropertyChange
 
     /**
      * @param args the command line arguments
@@ -359,8 +361,7 @@ public class AddSales extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox<String> menuDropdown;
-    private javax.swing.JPanel price;
-    private javax.swing.JLabel priceLabel;
+    private javax.swing.JTextField price;
     // End of variables declaration//GEN-END:variables
 
     private void getMenu() {
@@ -377,4 +378,22 @@ public class AddSales extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
+    
+       private void getPrice() {
+         Object menu = menuDropdown.getSelectedItem();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            Statement stmt = conn.createStatement(); 
+            ResultSet rs = stmt.executeQuery("SELECT product_price FROM product_table WHERE product_name='"+menu.toString()+"'");
+            if (rs.next()) {
+                System.out.println(rs.getString("product_price"));
+                price.setText(rs.getString("product_price"));
+                price.setEditable(false);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
 }

@@ -50,9 +50,9 @@ public class AddCategory extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         categoryTxtField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,7 +82,7 @@ public class AddCategory extends javax.swing.JFrame {
             categoryTable.getColumnModel().getColumn(0).setMaxWidth(110);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 471, 335));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 471, 460));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category (3).png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -97,7 +97,7 @@ public class AddCategory extends javax.swing.JFrame {
                 clearBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 150, 40));
+        jPanel1.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 150, 40));
 
         addBtn.setBackground(new java.awt.Color(0, 204, 51));
         addBtn.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -108,7 +108,7 @@ public class AddCategory extends javax.swing.JFrame {
                 addBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(addBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 150, 40));
+        jPanel1.add(addBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 150, 40));
 
         deleteBtn.setBackground(new java.awt.Color(255, 51, 51));
         deleteBtn.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -119,7 +119,7 @@ public class AddCategory extends javax.swing.JFrame {
                 deleteBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 150, 40));
+        jPanel1.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 150, 40));
 
         editBtn.setBackground(new java.awt.Color(0, 51, 255));
         editBtn.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -130,14 +130,11 @@ public class AddCategory extends javax.swing.JFrame {
                 editBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 150, 40));
+        jPanel1.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 150, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("CATEGORY");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 160, 40));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-sm.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 300, 300));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 160, 40));
 
         categoryTxtField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         categoryTxtField.setText("    Enter Category...");
@@ -158,12 +155,15 @@ public class AddCategory extends javax.swing.JFrame {
                 categoryTxtFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(categoryTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 330, 60));
+        jPanel1.add(categoryTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 330, 60));
 
         jPanel2.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 580));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 740));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 580));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 290, 210));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 770));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -306,7 +306,8 @@ public class AddCategory extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.categoryTxtField.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
-    private void data() {
+    private void data() 
+    {
         DefaultTableModel dm = (DefaultTableModel) categoryTable.getModel();
         dm.setRowCount(0);
         try {
