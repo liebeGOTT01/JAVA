@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -42,18 +43,18 @@ public class AddSales extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        addOrderBtn = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        categoryDropdown = new javax.swing.JComboBox<>();
+        tableDropdown = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         menuDropdown = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        quantity = new javax.swing.JSpinner();
         price = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -91,16 +92,16 @@ public class AddSales extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, 400, 190));
 
-        jButton3.setBackground(new java.awt.Color(0, 204, 51));
-        jButton3.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        jButton3.setText("ADD");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 51), 1, true));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addOrderBtn.setBackground(new java.awt.Color(0, 204, 51));
+        addOrderBtn.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        addOrderBtn.setText("ADD");
+        addOrderBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 51), 1, true));
+        addOrderBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addOrderBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 110, 50));
+        jPanel1.add(addOrderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 110, 50));
 
         jButton5.setBackground(new java.awt.Color(0, 51, 255));
         jButton5.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -134,14 +135,14 @@ public class AddSales extends javax.swing.JFrame {
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 3, true));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        categoryDropdown.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        categoryDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Table 1", "Table 2", "Table 3", "Table 4", "Table 5" }));
-        categoryDropdown.addActionListener(new java.awt.event.ActionListener() {
+        tableDropdown.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tableDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Table 1", "Table 2", "Table 3", "Table 4", "Table 5" }));
+        tableDropdown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryDropdownActionPerformed(evt);
+                tableDropdownActionPerformed(evt);
             }
         });
-        jPanel3.add(categoryDropdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 120, 43));
+        jPanel3.add(tableDropdown, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 120, 43));
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel6.setText("Table No.");
@@ -179,7 +180,7 @@ public class AddSales extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel12.setText("Menu:");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 62, -1));
-        jPanel3.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 120, 44));
+        jPanel3.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 120, 44));
         jPanel3.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 120, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 260, 260));
@@ -251,17 +252,30 @@ public class AddSales extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
+        
+        Int price = this.price.getText();
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); //load the driver
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            Statement stmt = (Statement) conn.createStatement(); //get the connection stream(connection port)
+            String query = "INSERT INTO `order_table`(`table_name`,`product_namne`, `product_price`, `product_quantity`, `amount`) VALUES ('" + this.tableDropdown.getSelectedItem() + "','" + this.menuDropdown.getSelectedItem() + "','" + this.price.getText() + "','" + this.quantity.getName() + "','" + this.quantity.getName() + "')";
+            stmt.executeUpdate(query);
+            conn.close();
+            JOptionPane.showMessageDialog(this, "Successfully Added.");
+            orderTable();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_addOrderBtnActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void categoryDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryDropdownActionPerformed
+    private void tableDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableDropdownActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_categoryDropdownActionPerformed
+    }//GEN-LAST:event_tableDropdownActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -276,15 +290,6 @@ public class AddSales extends javax.swing.JFrame {
     }//GEN-LAST:event_menuDropdownActionPerformed
 
     private void menuDropdownMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuDropdownMouseEntered
-//       try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-//            Statement stmt = conn.createStatement(); 
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM product_table");
-//            //priceLabel.setText();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
         getPrice();
     }//GEN-LAST:event_menuDropdownMouseEntered
 
@@ -334,9 +339,8 @@ public class AddSales extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> categoryDropdown;
+    private javax.swing.JButton addOrderBtn;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -354,7 +358,6 @@ public class AddSales extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -362,6 +365,8 @@ public class AddSales extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox<String> menuDropdown;
     private javax.swing.JTextField price;
+    private javax.swing.JSpinner quantity;
+    private javax.swing.JComboBox<String> tableDropdown;
     // End of variables declaration//GEN-END:variables
 
     private void getMenu() {
@@ -394,6 +399,10 @@ public class AddSales extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private void orderTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
