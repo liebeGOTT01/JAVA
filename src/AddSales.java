@@ -6,13 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Raven Torres
@@ -29,6 +22,7 @@ public class AddSales extends javax.swing.JFrame {
         initComponents();
         getMenu();
         getPrice();
+        orderTable();
     }
 
     /**
@@ -42,7 +36,7 @@ public class AddSales extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        orderTable = new javax.swing.JTable();
         addOrderBtn = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -74,8 +68,8 @@ public class AddSales extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        orderTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null}
@@ -84,10 +78,10 @@ public class AddSales extends javax.swing.JFrame {
                 "MENU", "QUANTITY", "PRICE", "AMOUNT"
             }
         ));
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
+        orderTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(orderTable);
+        if (orderTable.getColumnModel().getColumnCount() > 0) {
+            orderTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, 400, 190));
@@ -253,13 +247,13 @@ public class AddSales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderBtnActionPerformed
-        
-        Int price = this.price.getText();
-        try {
+       try {
             Class.forName("com.mysql.jdbc.Driver"); //load the driver
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
             Statement stmt = (Statement) conn.createStatement(); //get the connection stream(connection port)
-            String query = "INSERT INTO `order_table`(`table_name`,`product_namne`, `product_price`, `product_quantity`, `amount`) VALUES ('" + this.tableDropdown.getSelectedItem() + "','" + this.menuDropdown.getSelectedItem() + "','" + this.price.getText() + "','" + this.quantity.getName() + "','" + this.quantity.getName() + "')";
+            String getPrice = "select product_price from price_table";
+            int menuPrice = stmt.executeUpdate(getPrice);
+            String query = "INSERT INTO `order_table`(`table_name`,`product_name`, `product_price`, `product_quantity`, `amount`) VALUES ('" + this.tableDropdown.getSelectedItem() + "','" + this.menuDropdown.getSelectedItem() + "','" + this.menuPrice + "','" + this.quantity.getValue() + "','" + this.quantity.getValue() + "')";
             stmt.executeUpdate(query);
             conn.close();
             JOptionPane.showMessageDialog(this, "Successfully Added.");
@@ -294,18 +288,13 @@ public class AddSales extends javax.swing.JFrame {
     }//GEN-LAST:event_menuDropdownMouseEntered
 
     private void menuDropdownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuDropdownMouseClicked
-        // TODO add your handling code here:
         getPrice();
     }//GEN-LAST:event_menuDropdownMouseClicked
 
     private void menuDropdownPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_menuDropdownPropertyChange
-        // TODO add your handling code here:
-        
+        // TODO add your handling code here:     
     }//GEN-LAST:event_menuDropdownPropertyChange
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -358,12 +347,12 @@ public class AddSales extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JComboBox<String> menuDropdown;
+    private javax.swing.JTable orderTable;
     private javax.swing.JTextField price;
     private javax.swing.JSpinner quantity;
     private javax.swing.JComboBox<String> tableDropdown;
@@ -402,7 +391,22 @@ public class AddSales extends javax.swing.JFrame {
     }
 
     private void orderTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
+        dm.setRowCount(0);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            
+            PreparedStatement insert = con.prepareStatement("select * from order_table");
+            ResultSet result = insert.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+            while (result.next()) {
+                model.addRow(new Object[]{result.getInt(1), result.getString(2), result.getString(2)});
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
 }

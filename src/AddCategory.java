@@ -297,31 +297,24 @@ public class AddCategory extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-            }
-        
-    }
+            }   
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         // TODO add your handling code here:
         this.categoryTxtField.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
-    private void data() 
-    {
+    private void data() {
         DefaultTableModel dm = (DefaultTableModel) categoryTable.getModel();
         dm.setRowCount(0);
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-            
             PreparedStatement insert = con.prepareStatement("select * from category_table");
             ResultSet result = insert.executeQuery();
-
             DefaultTableModel model = (DefaultTableModel) categoryTable.getModel();
-//            model.setRowCount(0);
-
             while (result.next()) {
-
                 model.addRow(new Object[]{result.getInt(1), result.getString(2)});
             }
             con.close();
