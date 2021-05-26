@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2021 at 04:49 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: May 26, 2021 at 01:35 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -61,6 +60,15 @@ CREATE TABLE `order_table` (
   `ordered_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `order_table`
+--
+
+INSERT INTO `order_table` (`order_id`, `table_name`, `product_name`, `product_price`, `product_quantity`, `amount`, `ordered_at`) VALUES
+(3, 'Table 1', 'hamburger', 38, 3, 114, '2021-05-26 16:23:04'),
+(4, 'Table 1', 'pasta', 55, 5, 275, '2021-05-26 17:05:41'),
+(6, 'Table 1', 'shrimps', 75, 3, 225, '2021-05-26 17:53:05');
+
 -- --------------------------------------------------------
 
 --
@@ -85,6 +93,28 @@ INSERT INTO `product_table` (`product_id`, `product_name`, `product_category`, `
 (7, 'hamburger', 'Buy 1 Take 1 ', 38, '2021-05-23 20:32:07', '2021-05-23 20:32:07'),
 (11, 'shrimps', 'Sea foods', 75, '2021-05-25 16:32:52', '2021-05-25 16:32:52'),
 (12, 'pasta', 'Dessert', 55, '2021-05-25 16:33:39', '2021-05-25 16:33:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_table`
+--
+
+CREATE TABLE `sales_table` (
+  `sales_id` int(11) NOT NULL,
+  `customer_name` varchar(255) NOT NULL,
+  `table_name` varchar(255) NOT NULL,
+  `subtotal` int(11) NOT NULL,
+  `paid_at` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sales_table`
+--
+
+INSERT INTO `sales_table` (`sales_id`, `customer_name`, `table_name`, `subtotal`, `paid_at`) VALUES
+(1, 'Table 1', '', 389, '2021-05-26'),
+(2, 'raven torres', 'Table 1', 614, '2021-05-26');
 
 -- --------------------------------------------------------
 
@@ -122,6 +152,12 @@ ALTER TABLE `product_table`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `sales_table`
+--
+ALTER TABLE `sales_table`
+  ADD PRIMARY KEY (`sales_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -141,13 +177,19 @@ ALTER TABLE `category_table`
 -- AUTO_INCREMENT for table `order_table`
 --
 ALTER TABLE `order_table`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product_table`
 --
 ALTER TABLE `product_table`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `sales_table`
+--
+ALTER TABLE `sales_table`
+  MODIFY `sales_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`

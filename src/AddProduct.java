@@ -647,6 +647,7 @@ public class AddProduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editBtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnPActionPerformed
+        
         String product_name = menuTxtField.getText();
         Object product_category = categoryDropdown.getSelectedItem();
         int product_price = parseInt(priceTxtField.getText());
@@ -701,7 +702,6 @@ public class AddProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_categoryDropdownActionPerformed
 
     private void productTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productTableMouseClicked
-        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) productTable.getModel();
         int selectedIndex = productTable.getSelectedRow();
         Prod_id = model.getValueAt(selectedIndex, 0).toString();
@@ -722,20 +722,14 @@ public class AddProduct extends javax.swing.JFrame {
         if (dialogResult == JOptionPane.YES_OPTION) {
             try {
                 int id = Integer.valueOf(Prod_id);
-
                 Class.forName("com.mysql.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
                 pstmt = conn.prepareStatement("DELETE FROM product_table WHERE product_id=? ");
-
                 pstmt.setInt(1, id);
-
                 pstmt.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Succesfully Deleted");
-
                 data();
-
                 conn.close();
-
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
