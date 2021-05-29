@@ -51,8 +51,23 @@ public class AddCategory extends javax.swing.JFrame {
         editBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         categoryTxtField = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        categoryBtn3 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        menuBtn3 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        dashboardBtn3 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        addOrderBtn3 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        logoutBtn3 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,11 +172,98 @@ public class AddCategory extends javax.swing.JFrame {
         });
         jPanel1.add(categoryTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 330, 60));
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 740));
-
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 290, 210));
+
+        jPanel13.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        categoryBtn3.setBackground(new java.awt.Color(51, 51, 51));
+        categoryBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                categoryBtn3MouseClicked(evt);
+            }
+        });
+        categoryBtn3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category-icon (1).png"))); // NOI18N
+        jLabel15.setText("jLabel2");
+        categoryBtn3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, 55, 53));
+
+        jLabel20.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel20.setText("CATEGORY");
+        categoryBtn3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 81, -1));
+
+        jPanel13.add(categoryBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 100, 90));
+
+        menuBtn3.setBackground(new java.awt.Color(51, 51, 51));
+        menuBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuBtn3MouseClicked(evt);
+            }
+        });
+        menuBtn3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-icon.png"))); // NOI18N
+        jLabel16.setText("jLabel2");
+        menuBtn3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 67, 52));
+
+        jLabel22.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel22.setText("MENU");
+        menuBtn3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 81, -1));
+
+        jPanel13.add(menuBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 100, 90));
+
+        dashboardBtn3.setBackground(new java.awt.Color(51, 51, 51));
+        dashboardBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardBtn3MouseClicked(evt);
+            }
+        });
+        dashboardBtn3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dash-icon.png"))); // NOI18N
+        jLabel18.setText("jLabel2");
+        dashboardBtn3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, 55, 53));
+
+        jLabel24.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel24.setText("DASHBOARD");
+        dashboardBtn3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 81, -1));
+
+        jPanel13.add(dashboardBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
+
+        addOrderBtn3.setBackground(new java.awt.Color(51, 51, 51));
+        addOrderBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addOrderBtn3MouseClicked(evt);
+            }
+        });
+        addOrderBtn3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sale-icon.png"))); // NOI18N
+        jLabel25.setText("jLabel2");
+        addOrderBtn3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, 65));
+
+        jLabel21.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel21.setText("ADD ORDER");
+        addOrderBtn3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 74, 81, -1));
+
+        jPanel13.add(addOrderBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 100, -1));
+
+        logoutBtn3.setBackground(new java.awt.Color(51, 51, 51));
+        logoutBtn3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
+        jLabel27.setText("jLabel2");
+        logoutBtn3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 53, 65));
+
+        jLabel14.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel14.setText("LOG OUT");
+        logoutBtn3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel13.add(logoutBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 90));
+
+        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 770));
 
@@ -305,6 +407,27 @@ public class AddCategory extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.categoryTxtField.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void addOrderBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addOrderBtn3MouseClicked
+        setVisible(false);
+        new AddOrder().setVisible(true);
+    }//GEN-LAST:event_addOrderBtn3MouseClicked
+
+    private void dashboardBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardBtn3MouseClicked
+        setVisible(false);
+        new Dashboard().setVisible(true);
+    }//GEN-LAST:event_dashboardBtn3MouseClicked
+
+    private void categoryBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryBtn3MouseClicked
+        setVisible(false);
+        new AddCategory().setVisible(true);
+    }//GEN-LAST:event_categoryBtn3MouseClicked
+
+    private void menuBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBtn3MouseClicked
+        setVisible(false);
+        new AddProduct().setVisible(true);
+    }//GEN-LAST:event_menuBtn3MouseClicked
+    
     private void data() {
         DefaultTableModel dm = (DefaultTableModel) categoryTable.getModel();
         dm.setRowCount(0);
@@ -372,16 +495,31 @@ public class AddCategory extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
+    private javax.swing.JPanel addOrderBtn3;
+    private javax.swing.JPanel categoryBtn3;
     private javax.swing.JTable categoryTable;
     private javax.swing.JTextField categoryTxtField;
     private javax.swing.JButton clearBtn;
+    private javax.swing.JPanel dashboardBtn3;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel logoutBtn3;
+    private javax.swing.JPanel menuBtn3;
     // End of variables declaration//GEN-END:variables
 }

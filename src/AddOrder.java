@@ -11,15 +11,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Raven Torres
  */
-public class AddSales extends javax.swing.JFrame {
-    private String Order_id = "";
+public class AddOrder extends javax.swing.JFrame {
     private Connection conn;
     private PreparedStatement pstmt;
 
     /**
      * Creates new form AddSales
      */
-    public AddSales() {
+    public AddOrder() {
         initComponents();
         getMenu();
         getPrice();
@@ -56,14 +55,12 @@ public class AddSales extends javax.swing.JFrame {
         quantity = new javax.swing.JSpinner();
         price = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         amountTendered = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         subtotal = new javax.swing.JTextField();
         editOrderBtn = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         changeTxtField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -71,6 +68,22 @@ public class AddSales extends javax.swing.JFrame {
         nameTxtField = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         tableNameTxtField = new javax.swing.JTextField();
+        jPanel13 = new javax.swing.JPanel();
+        categoryBtn2 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        menuBtn2 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        dashboardBtn2 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        addOrderBtn2 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        logoutBtn2 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,9 +233,6 @@ public class AddSales extends javax.swing.JFrame {
         jLabel3.setText("Amount Tendered:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 530, 140, 20));
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/order.png"))); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, 380, 130));
@@ -255,9 +265,6 @@ public class AddSales extends javax.swing.JFrame {
         });
         jPanel1.add(editOrderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 110, 50));
 
-        jTextField1.setText("jTextField1");
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         changeTxtField.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         changeTxtField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 2, true));
         jPanel1.add(changeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 560, 160, 40));
@@ -288,6 +295,96 @@ public class AddSales extends javax.swing.JFrame {
         tableNameTxtField.setText("Table 1");
         tableNameTxtField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 2, true));
         jPanel1.add(tableNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 310, 50));
+
+        jPanel13.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        categoryBtn2.setBackground(new java.awt.Color(51, 51, 51));
+        categoryBtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                categoryBtn2MouseClicked(evt);
+            }
+        });
+        categoryBtn2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category-icon (1).png"))); // NOI18N
+        jLabel15.setText("jLabel2");
+        categoryBtn2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, 55, 53));
+
+        jLabel20.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel20.setText("CATEGORY");
+        categoryBtn2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 81, -1));
+
+        jPanel13.add(categoryBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 100, 90));
+
+        menuBtn2.setBackground(new java.awt.Color(51, 51, 51));
+        menuBtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuBtn2MouseClicked(evt);
+            }
+        });
+        menuBtn2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menu-icon.png"))); // NOI18N
+        jLabel16.setText("jLabel2");
+        menuBtn2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 67, 52));
+
+        jLabel22.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel22.setText("MENU");
+        menuBtn2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 81, -1));
+
+        jPanel13.add(menuBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 100, 90));
+
+        dashboardBtn2.setBackground(new java.awt.Color(51, 51, 51));
+        dashboardBtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardBtn2MouseClicked(evt);
+            }
+        });
+        dashboardBtn2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dash-icon.png"))); // NOI18N
+        jLabel18.setText("jLabel2");
+        dashboardBtn2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, 55, 53));
+
+        jLabel24.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel24.setText("DASHBOARD");
+        dashboardBtn2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 81, -1));
+
+        jPanel13.add(dashboardBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 90));
+
+        addOrderBtn2.setBackground(new java.awt.Color(51, 51, 51));
+        addOrderBtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addOrderBtn2MouseClicked(evt);
+            }
+        });
+        addOrderBtn2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sale-icon.png"))); // NOI18N
+        jLabel25.setText("jLabel2");
+        addOrderBtn2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, 65));
+
+        jLabel21.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel21.setText("ADD ORDER");
+        addOrderBtn2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 74, 81, -1));
+
+        jPanel13.add(addOrderBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 100, -1));
+
+        logoutBtn2.setBackground(new java.awt.Color(51, 51, 51));
+        logoutBtn2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
+        jLabel27.setText("jLabel2");
+        logoutBtn2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 53, 65));
+
+        jLabel14.setFont(new java.awt.Font("Corbel", 1, 12)); // NOI18N
+        jLabel14.setText("LOG OUT");
+        logoutBtn2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel13.add(logoutBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 100, 90));
+
+        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -453,6 +550,26 @@ public class AddSales extends javax.swing.JFrame {
         getPrice();
     }//GEN-LAST:event_menuDropdownItemStateChanged
 
+    private void addOrderBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addOrderBtn2MouseClicked
+        setVisible(false);
+        new AddOrder().setVisible(true);
+    }//GEN-LAST:event_addOrderBtn2MouseClicked
+
+    private void dashboardBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardBtn2MouseClicked
+        setVisible(false);
+        new Dashboard().setVisible(true);
+    }//GEN-LAST:event_dashboardBtn2MouseClicked
+
+    private void categoryBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryBtn2MouseClicked
+         setVisible(false);
+        new AddCategory().setVisible(true);
+    }//GEN-LAST:event_categoryBtn2MouseClicked
+
+    private void menuBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBtn2MouseClicked
+        setVisible(false);
+        new AddProduct().setVisible(true);
+    }//GEN-LAST:event_menuBtn2MouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -467,36 +584,56 @@ public class AddSales extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddSales().setVisible(true);
+                new AddOrder().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addOrderBtn;
+    private javax.swing.JPanel addOrderBtn2;
     private javax.swing.JTextField amountTendered;
+    private javax.swing.JPanel categoryBtn2;
     private javax.swing.JTextField changeTxtField;
     private javax.swing.JButton clearBtn;
+    private javax.swing.JPanel dashboardBtn2;
     private javax.swing.JButton deleteOrderBtn;
     private javax.swing.JButton editOrderBtn;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -504,10 +641,11 @@ public class AddSales extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel logoutBtn2;
+    private javax.swing.JPanel menuBtn2;
     private javax.swing.JComboBox<String> menuDropdown;
     private javax.swing.JTextField nameTxtField;
     private javax.swing.JTable orderTable;
