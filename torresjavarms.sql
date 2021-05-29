@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2021 at 01:35 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: May 29, 2021 at 03:29 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -42,7 +43,8 @@ INSERT INTO `category_table` (`category_id`, `category`) VALUES
 (3, 'Breakfast'),
 (4, 'Lunch'),
 (6, 'Buy 1 Take 1 '),
-(7, 'Sea foods');
+(7, 'Sea foods'),
+(8, 'drinks');
 
 -- --------------------------------------------------------
 
@@ -59,15 +61,6 @@ CREATE TABLE `order_table` (
   `amount` int(11) NOT NULL,
   `ordered_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_table`
---
-
-INSERT INTO `order_table` (`order_id`, `table_name`, `product_name`, `product_price`, `product_quantity`, `amount`, `ordered_at`) VALUES
-(3, 'Table 1', 'hamburger', 38, 3, 114, '2021-05-26 16:23:04'),
-(4, 'Table 1', 'pasta', 55, 5, 275, '2021-05-26 17:05:41'),
-(6, 'Table 1', 'shrimps', 75, 3, 225, '2021-05-26 17:53:05');
 
 -- --------------------------------------------------------
 
@@ -92,7 +85,8 @@ INSERT INTO `product_table` (`product_id`, `product_name`, `product_category`, `
 (6, 'Lechon belly', 'Lunch', 650, '2021-05-23 20:31:21', '2021-05-23 20:31:21'),
 (7, 'hamburger', 'Buy 1 Take 1 ', 38, '2021-05-23 20:32:07', '2021-05-23 20:32:07'),
 (11, 'shrimps', 'Sea foods', 75, '2021-05-25 16:32:52', '2021-05-25 16:32:52'),
-(12, 'pasta', 'Dessert', 55, '2021-05-25 16:33:39', '2021-05-25 16:33:39');
+(12, 'pasta', 'Dessert', 57, '2021-05-25 16:33:39', '2021-05-25 16:33:39'),
+(13, 'salad', 'Dessert', 35, '2021-05-29 10:05:05', '2021-05-29 10:05:05');
 
 -- --------------------------------------------------------
 
@@ -114,20 +108,30 @@ CREATE TABLE `sales_table` (
 
 INSERT INTO `sales_table` (`sales_id`, `customer_name`, `table_name`, `subtotal`, `paid_at`) VALUES
 (1, 'Table 1', '', 389, '2021-05-26'),
-(2, 'raven torres', 'Table 1', 614, '2021-05-26');
+(2, 'raven torres', 'Table 1', 614, '2021-05-26'),
+(3, '', 'Table 1', 614, '2021-05-29'),
+(4, '', 'Table 3', 1300, '2021-05-29'),
+(5, '', 'Table 4', 76, '2021-05-29');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `user_table`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `user_table` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `user_name` varchar(255) NOT NULL,
+  `user_email` varchar(255) NOT NULL,
+  `user_password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_table`
+--
+
+INSERT INTO `user_table` (`user_id`, `user_name`, `user_email`, `user_password`) VALUES
+(1, 'Raven Torres', 'raven@user.com', 'password');
 
 --
 -- Indexes for dumped tables
@@ -158,9 +162,9 @@ ALTER TABLE `sales_table`
   ADD PRIMARY KEY (`sales_id`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `user_table`
 --
-ALTER TABLE `user`
+ALTER TABLE `user_table`
   ADD PRIMARY KEY (`user_id`);
 
 --
@@ -171,31 +175,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category_table`
 --
 ALTER TABLE `category_table`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `order_table`
 --
 ALTER TABLE `order_table`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product_table`
 --
 ALTER TABLE `product_table`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `sales_table`
 --
 ALTER TABLE `sales_table`
-  MODIFY `sales_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sales_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `user_table`
 --
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `user_table`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
