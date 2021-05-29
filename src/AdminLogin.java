@@ -24,7 +24,6 @@ public class AdminLogin extends javax.swing.JFrame {
      */
     public AdminLogin() {
         initComponents();
-        login();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,12 +36,11 @@ public class AdminLogin extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        passTxtField = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         emailTxtField = new javax.swing.JTextField();
+        passwordTxtField = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -57,20 +55,6 @@ public class AdminLogin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 3, true));
         jPanel1.setLayout(null);
-
-        jTextField2.setText("jTextField1");
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(360, 120, 250, 40);
-
-        passTxtField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passTxtField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 0), 2));
-        passTxtField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passTxtFieldActionPerformed(evt);
-            }
-        });
-        jPanel1.add(passTxtField);
-        passTxtField.setBounds(50, 210, 240, 50);
 
         loginBtn.setBackground(new java.awt.Color(255, 51, 0));
         loginBtn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -111,13 +95,22 @@ public class AdminLogin extends javax.swing.JFrame {
         jPanel1.add(emailTxtField);
         emailTxtField.setBounds(50, 140, 240, 50);
 
+        passwordTxtField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 2, true));
+        passwordTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordTxtFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(passwordTxtField);
+        passwordTxtField.setBounds(50, 200, 240, 50);
+
         jPanel2.add(jPanel1);
-        jPanel1.setBounds(580, 90, 330, 360);
+        jPanel1.setBounds(570, 60, 330, 360);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         jLabel3.setText("jLabel3");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(0, 10, 500, 530);
+        jLabel3.setBounds(0, 20, 500, 530);
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 0));
         jPanel3.setLayout(new javax.swing.OverlayLayout(jPanel3));
@@ -156,20 +149,40 @@ public class AdminLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        login();
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
-    private void passTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passTxtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passTxtFieldActionPerformed
-
     private void loginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnMouseClicked
-
+        String user_email = emailTxtField.getText();
+        String user_password = passwordTxtField.getText();
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
+            
+            String query = "SELECT * FROM user_table WHERE user_name=? and user_password=?";
+            PreparedStatement Statement = conn.prepareStatement(query);
+            Statement.setString(1,user_email);
+            Statement.setString(2,user_password);
+            
+            ResultSet rs = Statement.executeQuery();
+            if(rs.next()) {
+                JOptionPane.showMessageDialog(null, "log in");
+            }else{
+                JOptionPane.showMessageDialog(null, "not log in");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
     }//GEN-LAST:event_loginBtnMouseClicked
 
     private void emailTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTxtFieldActionPerformed
+
+    private void passwordTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordTxtFieldActionPerformed
     
     private void Login() {
 //        String email = emailTxtField.getText();
@@ -197,32 +210,10 @@ public class AdminLogin extends javax.swing.JFrame {
 //        }        
     }
     
-    private void login(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-            String user_email = emailTxtField.getText();
-            String user_password = passTxtField.getText();
-            
-            String query = "SELECT * FROM user_table WHERE user_name=? and user_password=?";
-            PreparedStatement Statement = conn.prepareStatement(query);
-            Statement.setString(1,user_email);
-            Statement.setString(2,user_password);
-            
-            ResultSet rs = Statement.executeQuery();
-            if(rs.next()) {
-                JOptionPane.showMessageDialog(null, "log in");
-            }else{
-                JOptionPane.showMessageDialog(null, "not log in");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }        
-    }
+//    public void login(){
+//              
+//    }
 
-    
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -267,9 +258,8 @@ public class AdminLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JTextField passTxtField;
+    private javax.swing.JPasswordField passwordTxtField;
     // End of variables declaration//GEN-END:variables
 }
 
