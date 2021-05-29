@@ -1,11 +1,16 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -30,6 +35,8 @@ public class AddProduct extends javax.swing.JFrame {
         initComponents();
         data();
         getCategory();
+        showDate();
+        showTime();
     }
 
     /**
@@ -59,6 +66,12 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        timeLab = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        dateLab = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         categoryBtn = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -132,7 +145,7 @@ public class AddProduct extends javax.swing.JFrame {
             productTable.getColumnModel().getColumn(3).setMaxWidth(110);
         }
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 410, 420));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 410, 210));
 
         addBtnP.setBackground(new java.awt.Color(0, 204, 51));
         addBtnP.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
@@ -250,6 +263,32 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("MENU");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 80, 30));
+
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 10, 40));
+
+        timeLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        timeLab.setForeground(new java.awt.Color(0, 153, 51));
+        timeLab.setText("time");
+        jPanel7.add(timeLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 147, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setText("Time:");
+        jPanel7.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+
+        dateLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        dateLab.setForeground(new java.awt.Color(0, 102, 0));
+        dateLab.setText("date");
+        jPanel7.add(dateLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 130, -1));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel22.setText("Date:");
+        jPanel7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 450, 370, 70));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 0, 930, 770));
 
@@ -731,6 +770,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> categoryDropdown;
     private javax.swing.JButton clearBtnP;
     private javax.swing.JPanel dashboardBtn;
+    private javax.swing.JLabel dateLab;
     private javax.swing.JButton deleteBtnP;
     private javax.swing.JButton editBtnP;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -747,6 +787,8 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -772,6 +814,8 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
@@ -780,6 +824,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JTextField menuTxtField;
     private javax.swing.JTextField priceTxtField;
     private javax.swing.JTable productTable;
+    private javax.swing.JLabel timeLab;
     // End of variables declaration//GEN-END:variables
 
     private void data() {
@@ -815,5 +860,23 @@ public class AddProduct extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    public void showDate(){
+        Date today = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("MM-dd-yyyy");
+        String strdate = s.format(today);
+        dateLab.setText(strdate);;
+    }
+    public void showTime(){       
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date time = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
+                String strtime = s.format(time);
+                timeLab.setText(strtime);
+            }
+        }).start();
     }
 }

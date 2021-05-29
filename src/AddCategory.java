@@ -1,12 +1,17 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -30,6 +35,8 @@ public class AddCategory extends javax.swing.JFrame {
     public AddCategory() {
         initComponents();
         data();
+        showDate();
+        showTime();
     }
 
     /**
@@ -68,6 +75,12 @@ public class AddCategory extends javax.swing.JFrame {
         logoutBtn3 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        timeLab = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        dateLab = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -97,7 +110,7 @@ public class AddCategory extends javax.swing.JFrame {
             categoryTable.getColumnModel().getColumn(0).setMaxWidth(110);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 471, 460));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 471, 260));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category (3).png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -265,6 +278,32 @@ public class AddCategory extends javax.swing.JFrame {
 
         jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
 
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 10, 40));
+
+        timeLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        timeLab.setForeground(new java.awt.Color(0, 153, 51));
+        timeLab.setText("time");
+        jPanel7.add(timeLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 147, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Time:");
+        jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+
+        dateLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        dateLab.setForeground(new java.awt.Color(0, 102, 0));
+        dateLab.setText("date");
+        jPanel7.add(dateLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 130, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Date:");
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 450, 370, 70));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 770));
 
         pack();
@@ -313,36 +352,6 @@ public class AddCategory extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-// TODO add your handling code here:
-//        try {
-//
-//            Class.forName("com.mysql.jdbc.Driver"); //load the driver
-//            //Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.2/torresRa", "torresRa", "ravenAccess");
-//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-//            Statement stmt = (Statement) con.createStatement(); //get the connection stream(connection port)
-//            ResultSet querySelect = stmt.executeQuery("SELECT * FROM category_table");
-//
-//            while (querySelect.next()) {
-//                while (querySelect.getString(2).equals(0)) {
-//                    String query = "INSERT INTO `category_table`(`category`) VALUES ('" + this.categoryTxtField.getText() + "')";
-//                    stmt.executeUpdate(query);
-//                    con.close();
-//                    JOptionPane.showMessageDialog(this, "Successfully Added.");
-//                    DefaultTableModel model = (DefaultTableModel) categoryTable.getModel();
-//                    model.setRowCount(0);
-//                    data();
-//                }
-//                if (querySelect.getString(2).equals(categoryTxtField.getText())) {
-//                    JOptionPane.showMessageDialog(this, "Category already exist.");
-//                    con.close();
-//                }
-//
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void categoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTableMouseClicked
@@ -357,7 +366,6 @@ public class AddCategory extends javax.swing.JFrame {
 
     private void categoryTxtFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTxtFieldMouseClicked
         // TODO add your handling code here:
-
     }//GEN-LAST:event_categoryTxtFieldMouseClicked
 
     private void categoryTxtFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTxtFieldMouseEntered
@@ -501,6 +509,7 @@ public class AddCategory extends javax.swing.JFrame {
     private javax.swing.JTextField categoryTxtField;
     private javax.swing.JButton clearBtn;
     private javax.swing.JPanel dashboardBtn3;
+    private javax.swing.JLabel dateLab;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
@@ -516,10 +525,33 @@ public class AddCategory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel logoutBtn3;
     private javax.swing.JPanel menuBtn3;
+    private javax.swing.JLabel timeLab;
     // End of variables declaration//GEN-END:variables
+    public void showDate(){
+        Date today = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("MM-dd-yyyy");
+        String strdate = s.format(today);
+        dateLab.setText(strdate);;
+    }
+    public void showTime(){       
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date time = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
+                String strtime = s.format(time);
+                timeLab.setText(strtime);
+            }
+        }).start();
+    }
+
 }

@@ -1,10 +1,15 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +29,8 @@ public class AdminLogin extends javax.swing.JFrame {
      */
     public AdminLogin() {
         initComponents();
+        showDate();
+        showTime();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +51,12 @@ public class AdminLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        timeLab = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        dateLab = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -133,6 +146,33 @@ public class AdminLogin extends javax.swing.JFrame {
         jPanel2.add(jPanel4);
         jPanel4.setBounds(970, 0, 40, 530);
 
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 10, 40));
+
+        timeLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        timeLab.setForeground(new java.awt.Color(0, 153, 51));
+        timeLab.setText("time");
+        jPanel7.add(timeLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 147, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setText("Time:");
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+
+        dateLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        dateLab.setForeground(new java.awt.Color(0, 102, 0));
+        dateLab.setText("date");
+        jPanel7.add(dateLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 120, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("Date:");
+        jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        jPanel2.add(jPanel7);
+        jPanel7.setBounds(580, 440, 370, 70);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,14 +200,15 @@ public class AdminLogin extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
             
-            String query = "SELECT * FROM user_table WHERE user_name=? and user_password=?";
+            String query = "SELECT * FROM user_table WHERE user_email=? and user_password=?";
             PreparedStatement Statement = conn.prepareStatement(query);
             Statement.setString(1,user_email);
             Statement.setString(2,user_password);
             
             ResultSet rs = Statement.executeQuery();
             if(rs.next()) {
-                JOptionPane.showMessageDialog(null, "log in");
+                setVisible(false);
+                new Dashboard().setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "not log in");
             }
@@ -183,36 +224,6 @@ public class AdminLogin extends javax.swing.JFrame {
     private void passwordTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTxtFieldActionPerformed
-    
-    private void Login() {
-//        String email = emailTxtField.getText();
-//        String password = passTxtField.getText();
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/torresjavarms", "root", "");
-//            Statement stmt = conn.createStatement(); 
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM user_table");
-//            if(rs.next()) {
-//                String data_email = rs.getString("user_email");
-//                String data_password = rs.getString("user_password");
-//                System.out.println(data_email);
-//                System.out.println(data_password);
-//                System.out.println(email);
-//                System.out.println(password);
-//                if(email==data_email){
-//                    System.out.println("ok");
-//                }else{
-//                    System.out.println("dili okay");
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }        
-    }
-    
-//    public void login(){
-//              
-//    }
 
     /**
      * @param args the command line arguments
@@ -249,8 +260,28 @@ public class AdminLogin extends javax.swing.JFrame {
         });
     }
 
+        public void showDate(){
+        Date today = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("MM-dd-yyyy");
+        String strdate = s.format(today);
+        dateLab.setText(strdate);;
+    }
+    public void showTime(){       
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date time = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
+                String strtime = s.format(time);
+                timeLab.setText(strtime);
+            }
+        }).start();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel dateLab;
     private javax.swing.JTextField emailTxtField;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -258,8 +289,11 @@ public class AdminLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField passwordTxtField;
+    private javax.swing.JLabel timeLab;
     // End of variables declaration//GEN-END:variables
 }
 

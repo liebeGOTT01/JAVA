@@ -1,11 +1,16 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -26,7 +31,8 @@ public class AddOrder extends javax.swing.JFrame {
         orderTableSize();
         getTotal();
         getChange();
-
+        showDate();
+        showTime();
     }
 
     /**
@@ -84,6 +90,12 @@ public class AddOrder extends javax.swing.JFrame {
         logoutBtn2 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        timeLab = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        dateLab = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,11 +105,11 @@ public class AddOrder extends javax.swing.JFrame {
         orderTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "MENU", "PRICE", "QUANTITY", "AMOUNT"
+                "ID", "MENU", "PRICE", "QUANTITY", "AMOUNT", "TABLE NAME"
             }
         ));
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -235,7 +247,7 @@ public class AddOrder extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/order.png"))); // NOI18N
         jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, 380, 130));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 350, 130));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Orders for:");
@@ -386,11 +398,40 @@ public class AddOrder extends javax.swing.JFrame {
 
         jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 770));
 
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 10, 40));
+
+        timeLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        timeLab.setForeground(new java.awt.Color(0, 153, 51));
+        timeLab.setText("time");
+        jPanel7.add(timeLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 147, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setText("Time:");
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+
+        dateLab.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        dateLab.setForeground(new java.awt.Color(0, 102, 0));
+        dateLab.setText("date");
+        jPanel7.add(dateLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 120, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("Date:");
+        jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, 370, 70));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1065, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +473,12 @@ public class AddOrder extends javax.swing.JFrame {
             Statement stmt = (Statement) conn.createStatement();
             String query = "INSERT INTO `sales_table`(`customer_name`, `table_name`,`subtotal`) VALUES ('" + name + "','" + table + "','" + subtotal + "')";
             stmt.executeUpdate(query);
-            conn.close();
+            
+            pstmt = conn.prepareStatement("DELETE FROM order_table WHERE table_name=?");
+            pstmt.setString(1, table);
+            pstmt.executeUpdate();
+            
+            conn.close(); 
             JOptionPane.showMessageDialog(this, "Successfully Added." + change);
         } catch (Exception e) {
             System.out.println(e);
@@ -506,11 +552,11 @@ public class AddOrder extends javax.swing.JFrame {
     private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
         DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
         int selectedIndex = orderTable.getSelectedRow();
-        changeTxtField.setText(model.getValueAt(selectedIndex, 0).toString());
-        tableDropdown.setSelectedItem(model.getValueAt(selectedIndex, 1).toString());
-        menuDropdown.setSelectedItem(model.getValueAt(selectedIndex, 2).toString());
-        quantity.setValue(Integer.parseInt((String)model.getValueAt(selectedIndex, 4).toString()));
-        price.setText(model.getValueAt(selectedIndex, 3).toString());
+        order_id.setText(model.getValueAt(selectedIndex, 0).toString());
+        tableDropdown.setSelectedItem(model.getValueAt(selectedIndex, 5).toString());
+        menuDropdown.setSelectedItem(model.getValueAt(selectedIndex, 1).toString());
+        quantity.setValue(Integer.parseInt((String)model.getValueAt(selectedIndex, 3).toString()));
+        price.setText(model.getValueAt(selectedIndex, 2).toString());
     }//GEN-LAST:event_orderTableMouseClicked
 
     private void deleteOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrderBtnActionPerformed
@@ -536,10 +582,6 @@ public class AddOrder extends javax.swing.JFrame {
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceActionPerformed
-
-    private void order_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_order_idActionPerformed
 
     private void tableDropdownItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tableDropdownItemStateChanged
         Object table = this.tableDropdown.getSelectedItem();
@@ -569,6 +611,10 @@ public class AddOrder extends javax.swing.JFrame {
         setVisible(false);
         new AddProduct().setVisible(true);
     }//GEN-LAST:event_menuBtn2MouseClicked
+
+    private void order_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_order_idActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -617,6 +663,7 @@ public class AddOrder extends javax.swing.JFrame {
     private javax.swing.JTextField changeTxtField;
     private javax.swing.JButton clearBtn;
     private javax.swing.JPanel dashboardBtn2;
+    private javax.swing.JLabel dateLab;
     private javax.swing.JButton deleteOrderBtn;
     private javax.swing.JButton editOrderBtn;
     private javax.swing.JLabel jLabel10;
@@ -626,7 +673,9 @@ public class AddOrder extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -643,6 +692,8 @@ public class AddOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel logoutBtn2;
     private javax.swing.JPanel menuBtn2;
@@ -656,6 +707,7 @@ public class AddOrder extends javax.swing.JFrame {
     private javax.swing.JTextField subtotal;
     private javax.swing.JComboBox<String> tableDropdown;
     private javax.swing.JTextField tableNameTxtField;
+    private javax.swing.JLabel timeLab;
     // End of variables declaration//GEN-END:variables
 
     private void getMenu() {
@@ -708,7 +760,7 @@ public class AddOrder extends javax.swing.JFrame {
 
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
             while (result.next()) {
-                model.addRow(new Object[]{result.getInt(1), result.getString(3), result.getString(4), result.getString(5), result.getString(6)});
+                model.addRow(new Object[]{result.getInt(1), result.getString(3), result.getString(4), result.getString(5), result.getString(6),result.getString(2)});
             }
             con.close();
         } catch (Exception e) {
@@ -742,5 +794,23 @@ public class AddOrder extends javax.swing.JFrame {
         changeTxtField.setText(changeValue);
         changeTxtField.setEditable(false);
         System.out.println("the change is: " + changeValue);
+    }
+    
+    public void showDate(){
+        Date today = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("MM-dd-yyyy");
+        String strdate = s.format(today);
+        dateLab.setText(strdate);;
+    }
+    public void showTime(){       
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date time = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss a");
+                String strtime = s.format(time);
+                timeLab.setText(strtime);
+            }
+        }).start();
     }
 }
